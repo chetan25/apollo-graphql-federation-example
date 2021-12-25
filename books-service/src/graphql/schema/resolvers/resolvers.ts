@@ -1,15 +1,15 @@
 /* eslint-disable radix */
 import { GraphQLResolverMap } from 'apollo-graphql';
-import { Book } from '@prisma/client';
 import { IApolloServerContext } from '@src/lib/interfaces/IApolloServerContext';
 import mutation from '@src/graphql/schema/resolvers/mutation/mutation';
 import query from '@src/graphql/schema/resolvers/query/query';
-import { getBookById, getBooksByAuthor } from '@src/data/bookService';
 import { Author } from '@src/graphql/generated/graphql';
+import { models } from '@src/db/index';
+import { BookItem } from '@src/db/books-model';
 
 interface IBookReference {
   __typename: 'Book';
-  bookId: string;
+  id: string;
   authorId: string;
 }
 
@@ -23,16 +23,18 @@ const resolvers: GraphQLResolverMap<IApolloServerContext> = {
   Mutation: mutation,
   Book: {
     // eslint-disable-next-line no-underscore-dangle
-    __resolveReference: async (book: IBookReference): Promise<Book | null> => {
-      return getBookById(parseInt(book.bookId));
+    __resolveReference: (book: IBookReference): BookItem => {
+      return models.books.getBooksById(book.id);
     },
     author: async (book: IBookReference): Promise<Author> => {
+      console.log('called', book.authorId);
       return { __typename: 'Author', authorId: book.authorId };
     },
   },
   Author: {
-    books: async (author: IAuthorReference): Promise<Book[]> => {
-      return getBooksByAuthor(parseInt(author.authorId));
+    books: (author: IAuthorReference): BookItem[] => {
+      console.log(author, 'author');
+      return models.books.getBooksByAuthorId(author.authorId);
     },
   },
 };

@@ -1,0 +1,10 @@
+{
+  "books": [
+    {
+      "id": "1212121",
+      "title": "First Book",
+      "description": "First Test book",
+      "authorId": "1"
+    }
+  ]
+}

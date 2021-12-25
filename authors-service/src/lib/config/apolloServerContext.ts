@@ -1,8 +1,8 @@
 import { IApolloServerContext } from '@src/lib/interfaces/IApolloServerContext';
-import prismaContext from '@src/lib/prisma/prismaContext';
+import { models } from '@src/db';
 
 const apolloServerContext: IApolloServerContext = {
-  prismaContext,
+  authorsModel: models.authors,
 };
 
 export default apolloServerContext;

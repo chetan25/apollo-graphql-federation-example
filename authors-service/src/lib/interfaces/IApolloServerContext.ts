@@ -1,5 +1,5 @@
-import { IPrismaContext } from '@src/lib/interfaces/IPrismaContext';
+import { models } from '@src/db';
 
 export interface IApolloServerContext {
-  prismaContext: IPrismaContext;
+  authorsModel: typeof models.authors;
 }

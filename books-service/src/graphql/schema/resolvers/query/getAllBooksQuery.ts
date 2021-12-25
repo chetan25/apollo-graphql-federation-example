@@ -1,13 +1,15 @@
 import { GraphQLFieldResolver } from 'graphql';
-import { Book } from '@prisma/client';
+import { BookItem } from '@src/db/books-model';
 import { IApolloServerContext } from '@src/lib/interfaces/IApolloServerContext';
-import { getAllBooks } from '@src/data/bookService';
 
-const getAllBooksQuery: GraphQLFieldResolver<
-  unknown,
-  IApolloServerContext
-> = async (_source, _args, _context, _info): Promise<Book[]> => {
-  const books = await getAllBooks();
+const getAllBooksQuery: GraphQLFieldResolver<unknown, IApolloServerContext> = (
+  _source,
+  _args,
+  _context,
+  _info
+): BookItem[] => {
+  const { booksModel } = _context;
+  const books = booksModel.getAllBooks();
   return books;
 };
 

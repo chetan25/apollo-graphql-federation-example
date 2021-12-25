@@ -1,9 +1,9 @@
 import { GraphQLResolverMap } from 'apollo-graphql';
-import { Author } from '@prisma/client';
-import { getAuthorById } from '@src/data/authorService';
+import { Author } from '@src/db/author-model';
 import { IApolloServerContext } from '@src/lib/interfaces/IApolloServerContext';
 import mutation from '@src/graphql/schema/resolvers/mutation/mutation';
 import query from '@src/graphql/schema/resolvers/query/query';
+import { models } from '@src/db';
 
 interface IAuthorReference {
   __typename: 'Author';
@@ -15,11 +15,10 @@ const resolvers: GraphQLResolverMap<IApolloServerContext> = {
   Mutation: mutation,
   Author: {
     // eslint-disable-next-line no-underscore-dangle
-    __resolveReference: async (
-      ref: IAuthorReference
-    ): Promise<Author | null> => {
+    __resolveReference: (ref: IAuthorReference): Author => {
       // eslint-disable-next-line radix
-      return getAuthorById(parseInt(ref.authorId));
+      console.log('ref', ref);
+      return models.authors.getAuthorsById(ref.authorId);
     },
   },
 };

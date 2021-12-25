@@ -7,10 +7,14 @@ dotenv.config({
 });
 
 const startServer = () => {
-  let gateway: ApolloGateway;
-  if (process.env.NODE_ENV === 'development') {
+  let gateway;
+  if (process.env.NODE_ENV !== 'development') {
     gateway = new ApolloGateway({
-      // supergraphSdl: supergraphSchema,
+      debug: true,
+    });
+  } else {
+    console.log('development');
+    gateway = new ApolloGateway({
       serviceList: [
         {
           name: 'books',
@@ -21,14 +25,16 @@ const startServer = () => {
           url: process.env.AUTHORS_SERVICE_URL,
         },
       ],
+      debug: true,
     });
-  } else {
-    gateway = new ApolloGateway();
   }
 
   const server = new ApolloServer({
     gateway,
     playground: process.env.NODE_ENV !== 'production',
+    engine: {
+      apiKey: process.env.APOLLO_KEY,
+    },
     subscriptions: false,
   });
 

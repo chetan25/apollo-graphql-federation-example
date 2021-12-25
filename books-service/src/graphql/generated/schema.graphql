@@ -3,15 +3,16 @@ extend type Author @key(fields: "authorId") {
   books: [Book]
 }
 
-type Book @key(fields: "bookId") {
-  bookId: ID!
+type Book @key(fields: "id") {
+  id: ID!
   title: String
+  description: String
   author: Author
 }
 
 input CreateBookInput {
   title: String
-  authorId: Int
+  authorId: String
 }
 
 extend type Mutation {
@@ -20,9 +21,6 @@ extend type Mutation {
 
 extend type Query {
   books: [Book]
+  bookById(bookId: Int): Book
   booksByAuthor(authorId: Int): [Book]
-}
-
-type Test {
-  testId: ID!
 }

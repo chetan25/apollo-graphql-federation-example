@@ -21,4 +21,6 @@ extend type Mutation {
 extend type Query {
   books: [Book]
   booksByAuthor(authorId: Int): [Book]
+  booksById(bookId: Int): [Book]
+  booksByName(name: String): [Book]
 }

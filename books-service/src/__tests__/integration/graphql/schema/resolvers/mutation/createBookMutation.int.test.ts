@@ -2,7 +2,6 @@
 import { ApolloServer, gql } from 'apollo-server';
 import apolloServerConfig from '@src/lib/config/apolloServerConfig';
 import { CreateBookInput } from '@src/graphql/generated/graphql';
-import prismaContext from '@src/lib/prisma/prismaContext';
 
 const CREATE_BOOK_MUTATION = gql`
   mutation CreateBook($input: CreateBookInput!) {
@@ -23,15 +22,12 @@ describe('tests', () => {
     server = new ApolloServer(apolloServerConfig);
   });
 
-  afterAll(async () => {
-    prismaContext.prisma.book.deleteMany();
-    await prismaContext.prisma.$disconnect();
-  });
+  afterAll(async () => {});
 
   it('should pass', async () => {
     const mockBook: CreateBookInput = {
       title: 'dumb title',
-      author: 'smart author',
+      authorId: '212',
     };
 
     const result = await server.executeOperation({
@@ -45,6 +41,6 @@ describe('tests', () => {
     expect(createdBook.__typename).toBe(typename);
     expect(createdBook.bookId).toBeDefined();
     expect(createdBook.title).toBe(mockBook.title);
-    expect(createdBook.author).toBe(mockBook.author);
+    expect(createdBook.authorId).toBe(mockBook.authorId);
   });
 });

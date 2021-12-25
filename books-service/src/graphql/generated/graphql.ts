@@ -28,14 +28,15 @@ export type Author = {
 
 export type Book = {
   __typename?: 'Book';
-  bookId: Scalars['ID'];
+  id: Scalars['ID'];
   title?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
   author?: Maybe<Author>;
 };
 
 export type CreateBookInput = {
   title?: Maybe<Scalars['String']>;
-  authorId?: Maybe<Scalars['Int']>;
+  authorId?: Maybe<Scalars['String']>;
 };
 
 export type Mutation = {
@@ -53,6 +54,7 @@ export type Query = {
   _entities: Array<Maybe<_Entity>>;
   _service: _Service;
   books?: Maybe<Array<Maybe<Book>>>;
+  bookById?: Maybe<Book>;
   booksByAuthor?: Maybe<Array<Maybe<Book>>>;
 };
 
@@ -62,13 +64,13 @@ export type Query_EntitiesArgs = {
 };
 
 
-export type QueryBooksByAuthorArgs = {
-  authorId?: Maybe<Scalars['Int']>;
+export type QueryBookByIdArgs = {
+  bookId?: Maybe<Scalars['Int']>;
 };
 
-export type Test = {
-  __typename?: 'Test';
-  testId: Scalars['ID'];
+
+export type QueryBooksByAuthorArgs = {
+  authorId?: Maybe<Scalars['Int']>;
 };
 
 
@@ -164,10 +166,9 @@ export type ResolversTypes = ResolversObject<{
   Book: ResolverTypeWrapper<Book>;
   String: ResolverTypeWrapper<Scalars['String']>;
   CreateBookInput: CreateBookInput;
-  Int: ResolverTypeWrapper<Scalars['Int']>;
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
-  Test: ResolverTypeWrapper<Test>;
+  Int: ResolverTypeWrapper<Scalars['Int']>;
   _Any: ResolverTypeWrapper<Scalars['_Any']>;
   _Entity: ResolversTypes['Book'] | ResolversTypes['Author'];
   _Service: ResolverTypeWrapper<_Service>;
@@ -181,10 +182,9 @@ export type ResolversParentTypes = ResolversObject<{
   Book: Book;
   String: Scalars['String'];
   CreateBookInput: CreateBookInput;
-  Int: Scalars['Int'];
   Mutation: {};
   Query: {};
-  Test: Test;
+  Int: Scalars['Int'];
   _Any: Scalars['_Any'];
   _Entity: ResolversParentTypes['Book'] | ResolversParentTypes['Author'];
   _Service: _Service;
@@ -202,8 +202,9 @@ export type AuthorResolvers<ContextType = IPrismaContext, ParentType extends Res
 }>;
 
 export type BookResolvers<ContextType = IPrismaContext, ParentType extends ResolversParentTypes['Book'] = ResolversParentTypes['Book']> = ResolversObject<{
-  bookId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   title?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   author?: Resolver<Maybe<ResolversTypes['Author']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
@@ -216,12 +217,8 @@ export type QueryResolvers<ContextType = IPrismaContext, ParentType extends Reso
   _entities?: Resolver<Array<Maybe<ResolversTypes['_Entity']>>, ParentType, ContextType, RequireFields<Query_EntitiesArgs, 'representations'>>;
   _service?: Resolver<ResolversTypes['_Service'], ParentType, ContextType>;
   books?: Resolver<Maybe<Array<Maybe<ResolversTypes['Book']>>>, ParentType, ContextType>;
+  bookById?: Resolver<Maybe<ResolversTypes['Book']>, ParentType, ContextType, RequireFields<QueryBookByIdArgs, never>>;
   booksByAuthor?: Resolver<Maybe<Array<Maybe<ResolversTypes['Book']>>>, ParentType, ContextType, RequireFields<QueryBooksByAuthorArgs, never>>;
-}>;
-
-export type TestResolvers<ContextType = IPrismaContext, ParentType extends ResolversParentTypes['Test'] = ResolversParentTypes['Test']> = ResolversObject<{
-  testId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export interface _AnyScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['_Any'], any> {
@@ -242,7 +239,6 @@ export type Resolvers<ContextType = IPrismaContext> = ResolversObject<{
   Book?: BookResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
-  Test?: TestResolvers<ContextType>;
   _Any?: GraphQLScalarType;
   _Entity?: _EntityResolvers<ContextType>;
   _Service?: _ServiceResolvers<ContextType>;

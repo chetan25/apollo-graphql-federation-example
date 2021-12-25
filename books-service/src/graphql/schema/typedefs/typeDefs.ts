@@ -5,6 +5,8 @@ const typeDefs = gql`
     # get all books
     books: [Book]
 
+    bookById(bookId: Int): Book
+
     # get all books by author id
     booksByAuthor(authorId: Int): [Book]
   }
@@ -14,19 +16,18 @@ const typeDefs = gql`
     createBook(input: CreateBookInput!): Book!
   }
 
-  type Book @key(fields: "bookId") {
+  type Book @key(fields: "id") {
     #  the book id
-    bookId: ID!
+    id: ID!
 
     # the book title
     title: String
 
+    # description
+    description: String
+
     # the book author
     author: Author
-  }
-
-  type Test {
-    testId: ID!
   }
 
   extend type Author @key(fields: "authorId") {
@@ -42,7 +43,7 @@ const typeDefs = gql`
     title: String
 
     # the author id
-    authorId: Int
+    authorId: String
   }
 `;
 

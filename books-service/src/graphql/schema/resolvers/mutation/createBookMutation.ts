@@ -1,18 +1,12 @@
 import { GraphQLFieldResolver } from 'graphql';
-import { Book } from '@prisma/client';
 import { IApolloServerContext } from '@src/lib/interfaces/IApolloServerContext';
-import { createBook } from '@src/data/bookService';
+import { BookItem } from '@src/db/books-model';
 
-const createBookMutation: GraphQLFieldResolver<
-  unknown,
-  IApolloServerContext
-> = async (
-  _source,
-  { input: { title, authorId } },
-  _context,
-  _info
-): Promise<Book> => {
-  return createBook(title, authorId);
-};
+const createBookMutation: GraphQLFieldResolver<unknown, IApolloServerContext> =
+  (_source, { input: { title, authorId } }, _context, _info): BookItem => {
+    const { booksModel } = _context;
+    const book = booksModel.createBook(title, 'test', authorId);
+    return book;
+  };
 
 export default createBookMutation;

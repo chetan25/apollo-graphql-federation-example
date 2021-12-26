@@ -41,6 +41,6 @@ jobs:
           APOLLO_USER_KEY: ${{ secrets.APOLLO_USER_KEY }}
         run: |
           NODE_ENV=CI npm start & sleep 10
-          rover subgraph introspect http://localhost:4001 |
+          npx -p @apollo/rover rover subgraph introspect http://localhost:4001 |
           APOLLO_KEY=${{ secrets.APOLLO_KEY }} |
-          rover subgraph publish chets-federated-gateway-prd@current --name books --schema - --routing-url http://localhost:4001:4001/graphql
+          npx -p @apollo/rover rover subgraph publish chets-federated-gateway-prd@current --name books --schema - --routing-url http://localhost:4001:4001/graphql

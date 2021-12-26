@@ -2,7 +2,14 @@ import { ApolloServer } from 'apollo-server';
 import dotenv from 'dotenv-safe';
 import apolloServerConfig from '@src/lib/config/apolloServerConfig';
 
-dotenv.config();
+const isCIPipeline = process.env.NODE_ENV === 'CI';
+
+// we don't want to access the dotenv in CI pipeline
+if (!isCIPipeline) {
+  dotenv.config({
+    allowEmptyValues: true,
+  });
+}
 
 const startServer = () => {
   const server = new ApolloServer(apolloServerConfig);

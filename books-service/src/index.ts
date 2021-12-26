@@ -1,16 +1,17 @@
 import { ApolloServer } from 'apollo-server';
 import dotenv from 'dotenv-safe';
-import apolloServerConfig from '@src/lib/config/apolloServerConfig';
+import getApolloServerConfig from '@src/lib/config/apolloServerConfig';
 
-if (process.env.NODE_ENV === 'development') {
-  dotenv.config({
-    allowEmptyValues: true,
-  });
-}
+dotenv.config({
+  allowEmptyValues: true,
+});
 
-console.log(process.env.NODE_ENV, 'process.env.NODE_ENV');
+const runningEnvironmant = process.env.NODE_ENV || 'production';
+
+console.log(runningEnvironmant);
+
 const startServer = () => {
-  const server = new ApolloServer(apolloServerConfig);
+  const server = new ApolloServer(getApolloServerConfig(runningEnvironmant));
 
   server
     .listen({

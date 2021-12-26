@@ -115,8 +115,7 @@ $ APOLLO_KEY=Your Key \
 Option 2: Introspect a running server (e.g., at http://localhost:4000)
 
 ```js
- rover graph introspect \
-  http://localhost:4000 | \
-  APOLLO_KEY=Your Key \
-  rover graph publish chets-federated-gateway-prd@current --schema -
+ rover subgraph introspect http://localhost:4001 |
+APOLLO_KEY=Your Key |
+rover subgraph publish chets-federated-gateway-prd@current --name books --schema - --routing-url http://localhost:4001:4001/graphql
 ```

@@ -125,3 +125,5 @@ rover subgraph publish chets-federated-gateway-prd@current --name books --schema
           APOLLO_KEY=${{ secrets.APOLLO_KEY }} |
           npx -p @apollo/rover rover subgraph publish chets-federated-gateway-prd@current --name books --schema - --routing-url http://localhost:4001:4001/graphql
 ```
+
+// npx -p @apollo/rover rover config whoami

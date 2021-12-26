@@ -2,9 +2,11 @@ import { ApolloGateway } from '@apollo/gateway';
 import { ApolloServer } from 'apollo-server';
 import dotenv from 'dotenv-safe';
 
-dotenv.config({
-  allowEmptyValues: true,
-});
+if (process.env.NODE_ENV === 'development') {
+  dotenv.config({
+    allowEmptyValues: true,
+  });
+}
 
 const startServer = () => {
   let gateway;

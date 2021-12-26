@@ -1,0 +1,47 @@
+name: Continuous Deployment Authors
+
+on:
+  push:
+    branches:
+      - main
+    # In a mono repo this tells git to run this action only when something under the specified path changes
+    paths:
+      - "authors-service/**"
+
+defaults:
+  run:
+    # sets the working directory where to run the command from, same as paths
+    working-directory: authors-service
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Cache node modules
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-build-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-build-${{ env.cache-name }}-
+            ${{ runner.OS }}-build-
+            ${{ runner.OS }}-
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Start Server
+        env:
+          APOLLO_KEY: ${{ secrets.APOLLO_KEY }}
+          APOLLO_GRAPH_ID: ${{ secrets.APOLLO_GRAPH_ID }}
+          APOLLO_GRAPH_VARIANT: ${{ secrets.APOLLO_GRAPH_VARIANT }}
+          APOLLO_USER_KEY: ${{ secrets.APOLLO_USER_KEY }}
+          TEST_VALUE: Test
+        run: |
+          npm run check-env &
+          NODE_ENV=CI npm start & sleep 10
+          APOLLO_KEY=${{ secrets.APOLLO_KEY }} |
+          npm run publish-schema

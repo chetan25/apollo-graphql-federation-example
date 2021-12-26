@@ -1,6 +1,6 @@
 import { ApolloServer } from 'apollo-server';
 import dotenv from 'dotenv-safe';
-import apolloServerConfig from '@src/lib/config/apolloServerConfig';
+import getApolloServerConfig from '@src/lib/config/apolloServerConfig';
 
 const isCIPipeline = process.env.NODE_ENV === 'CI';
 
@@ -11,8 +11,12 @@ if (!isCIPipeline) {
   });
 }
 
+const runningEnvironmant = process.env.NODE_ENV || 'production';
+
+console.log(runningEnvironmant);
+
 const startServer = () => {
-  const server = new ApolloServer(apolloServerConfig);
+  const server = new ApolloServer(getApolloServerConfig(runningEnvironmant));
 
   server
     .listen({

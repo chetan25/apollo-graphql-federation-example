@@ -40,6 +40,7 @@ jobs:
           APOLLO_GRAPH_VARIANT: ${{ secrets.APOLLO_GRAPH_VARIANT }}
           APOLLO_USER_KEY: ${{ secrets.APOLLO_USER_KEY }}
         run: |
+          npx -p @apollo/rover rover config whoami
           NODE_ENV=CI npm start & sleep 10
           APOLLO_KEY=${{ secrets.APOLLO_KEY }} |
           npm run publish-schema

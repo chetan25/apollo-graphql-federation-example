@@ -18,7 +18,7 @@
     "lint:fix": "eslint --fix .",
     "generate": "graphql-codegen --config codegen.yml && rover subgraph introspect http://localhost:4001/graphql > ./src/graphql/generated/schema.graphql",
     "generate-schema": "rover subgraph introspect http://localhost:4001/graphql > ./src/graphql/generated/schema.graphql",
-    "publish-schema": "rover subgraph publish chets-federated-gateway-prd@current --name books --schema ./src/graphql/generated/schema.graphql --routing-url http://localhost:4001/graphql"
+    "publish-schema": "rover subgraph introspect http://localhost:4001/graphql | rover subgraph publish chets-federated-gateway-prd@current --name books --schema - --routing-url http://localhost:4001/graphql"
   },
   "devDependencies": {
     "@apollo/rover": "^0.4.1",

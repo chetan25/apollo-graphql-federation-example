@@ -42,4 +42,8 @@ jobs:
           APOLLO_GRAPH_VARIANT: ${{ APOLLO_GRAPH_VARIANT }}
           APOLLO_USER_KEY: ${{ APOLLO_USER_KEY }}
           NODE_ENV=CI
-        run: npm start & sleep 10 && npm run generate && npm run publish-schema
+        run: |
+          npm start & sleep 10
+          npm run generate
+          APOLLO_KEY=${{ APOLLO_KEY }} rover subgraph publish chets-federated-gateway-prd@current --name books --schema ./src/graphql/generated/schema.graphql --routing-url http://localhost:4001/graphql
+

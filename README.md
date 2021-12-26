@@ -128,4 +128,4 @@ rover subgraph publish chets-federated-gateway-prd@current --name books --schema
 
 // npx -p @apollo/rover rover config whoami
 
-**_ Forke from https://github.com/leoroese/apollofederation-tutorial _**
+**_ Forked from https://github.com/leoroese/apollofederation-tutorial _**

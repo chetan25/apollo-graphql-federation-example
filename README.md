@@ -119,3 +119,9 @@ Option 2: Introspect a running server (e.g., at http://localhost:4000)
 APOLLO_KEY=Your Key |
 rover subgraph publish chets-federated-gateway-prd@current --name books --schema - --routing-url http://localhost:4001:4001/graphql
 ```
+
+```js
+ npx -p @apollo/rover rover subgraph introspect http://localhost:4001 |
+          APOLLO_KEY=${{ secrets.APOLLO_KEY }} |
+          npx -p @apollo/rover rover subgraph publish chets-federated-gateway-prd@current --name books --schema - --routing-url http://localhost:4001:4001/graphql
+```

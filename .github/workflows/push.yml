@@ -34,4 +34,11 @@ jobs:
         run: npm install
 
       - name: Start Server
+        env:
+          BOOKS_SERVICE_URL: ${{ BOOKS_SERVICE_URL }}
+          AUTHORS_SERVICE_URL: ${{ AUTHORS_SERVICE_URL }}
+          APOLLO_KEY: ${{ APOLLO_KEY }}
+          APOLLO_GRAPH_ID: ${{ APOLLO_GRAPH_ID }}
+          APOLLO_GRAPH_VARIANT: ${{ APOLLO_GRAPH_VARIANT }}
+          APOLLO_USER_KEY: ${{ APOLLO_USER_KEY }}
         run: npm start & sleep 10 && npm run generate && npm run publish-schema

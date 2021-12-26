@@ -39,7 +39,9 @@ jobs:
           APOLLO_GRAPH_ID: ${{ secrets.APOLLO_GRAPH_ID }}
           APOLLO_GRAPH_VARIANT: ${{ secrets.APOLLO_GRAPH_VARIANT }}
           APOLLO_USER_KEY: ${{ secrets.APOLLO_USER_KEY }}
+          TEST_VALUE: Test
         run: |
+          npm run check-env &
           NODE_ENV=CI npm start & sleep 10
           APOLLO_KEY=${{ secrets.APOLLO_KEY }} |
           npm run publish-schema

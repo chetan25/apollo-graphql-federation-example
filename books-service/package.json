@@ -19,7 +19,7 @@
     "check-env": "dotenv -- cross-var \"echo Test:  %TEST_VALUE%\"",
     "generate": "graphql-codegen --config codegen.yml && rover subgraph introspect http://localhost:4001/graphql > ./src/graphql/generated/schema.graphql",
     "generate-schema": "rover subgraph introspect http://localhost:4001/graphql > ./src/graphql/generated/schema.graphql",
-    "publish-schema": "rover subgraph introspect http://localhost:4001 | dotenv -- cross-var rover subgraph publish  %APOLLO_GRAPH_ID% --name %SUB_GRAPH_NAME% --schema - --routing-url http://localhost:4001/graphql"
+    "publish-schema": "dotenv -- cross-var rover subgraph introspect http://localhost:4001 | rover subgraph publish  %APOLLO_GRAPH_ID%@%APOLLO_GRAPH_VARIANT% --name books --schema - --routing-url http://localhost:4001/graphql"
   },
   "devDependencies": {
     "@apollo/rover": "^0.4.1",

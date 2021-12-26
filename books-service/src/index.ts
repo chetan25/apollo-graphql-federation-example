@@ -2,9 +2,11 @@ import { ApolloServer } from 'apollo-server';
 import dotenv from 'dotenv-safe';
 import getApolloServerConfig from '@src/lib/config/apolloServerConfig';
 
-dotenv.config({
-  allowEmptyValues: true,
-});
+if (process.env.NODE_ENV !== 'CI') {
+  dotenv.config({
+    allowEmptyValues: true,
+  });
+}
 
 const runningEnvironmant = process.env.NODE_ENV || 'production';
 

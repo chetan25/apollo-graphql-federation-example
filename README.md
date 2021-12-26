@@ -126,6 +126,11 @@ rover subgraph publish chets-federated-gateway-prd@current --name books --schema
           npx -p @apollo/rover rover subgraph publish chets-federated-gateway-prd@current --name books --schema - --routing-url http://localhost:4001:4001/graphql
 ```
 
+#### Did not work
+
+- Tried using the `dotenv -- cross-var` to mask the graph id in the package script but it did not work in the github actions. It works fine from the command line in the local development.
+- For now exposing the graph name is fine, as we don't expose any other keys.
+
 // npx -p @apollo/rover rover config whoami
 
 **_ Forked from https://github.com/leoroese/apollofederation-tutorial _**

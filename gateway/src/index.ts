@@ -2,11 +2,15 @@ import { ApolloGateway } from '@apollo/gateway';
 import { ApolloServer } from 'apollo-server';
 import dotenv from 'dotenv-safe';
 
-if (process.env.NODE_ENV === 'development') {
-  dotenv.config({
-    allowEmptyValues: true,
-  });
-}
+// if (process.env.NODE_ENV === 'development') {
+//   dotenv.config({
+//     allowEmptyValues: true,
+//   });
+// }
+
+dotenv.config({
+  allowEmptyValues: true,
+});
 
 const startServer = () => {
   let gateway;
@@ -20,11 +24,11 @@ const startServer = () => {
       serviceList: [
         {
           name: 'books',
-          url: process.env.BOOKS_SERVICE_URL,
+          url: 'http://localhost:4001/api',
         },
         {
           name: 'authors',
-          url: process.env.AUTHORS_SERVICE_URL,
+          url: 'http://localhost:4002/api',
         },
       ],
       debug: true,
@@ -33,16 +37,20 @@ const startServer = () => {
 
   const server = new ApolloServer({
     gateway,
-    playground: process.env.NODE_ENV !== 'production',
+    playground: process.env.NODE_ENV === 'development',
+    introspection: process.env.NODE_ENV === 'development',
     engine: {
-      apiKey: process.env.APOLLO_KEY,
+      apiKey:
+        process.env.NODE_ENV !== 'development' ? process.env.APOLLO_KEY : '',
     },
     subscriptions: false,
   });
 
+  const port = process.env.PORT || 4000;
+
   server
     .listen({
-      port: 4000,
+      port: port,
     })
     .then(({ url }) => {
       console.log(`🚀  Server ready at ${url}graphql`);

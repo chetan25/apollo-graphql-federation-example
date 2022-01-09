@@ -3,7 +3,6 @@ import { GraphQLResolverMap } from 'apollo-graphql';
 import { IApolloServerContext } from '@src/lib/interfaces/IApolloServerContext';
 import mutation from '@src/graphql/schema/resolvers/mutation/mutation';
 import query from '@src/graphql/schema/resolvers/query/query';
-import { Author } from '@src/graphql/generated/graphql';
 import { models } from '@src/db/index';
 import { BookItem } from '@src/db/books-model';
 
@@ -26,7 +25,7 @@ const resolvers: GraphQLResolverMap<IApolloServerContext> = {
     __resolveReference: (book: IBookReference): BookItem => {
       return models.books.getBooksById(book.id);
     },
-    author: async (book: IBookReference): Promise<Author> => {
+    author: async (book: IBookReference): Promise<IAuthorReference> => {
       console.log('called', book.authorId);
       return { __typename: 'Author', authorId: book.authorId };
     },

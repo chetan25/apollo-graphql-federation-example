@@ -126,6 +126,34 @@ rover subgraph publish chets-federated-gateway-prd@current --name books --schema
           npx -p @apollo/rover rover subgraph publish chets-federated-gateway-prd@current --name books --schema - --routing-url http://localhost:4001:4001/graphql
 ```
 
+To upload a subgraph from local file
+
+```js
+npx -p @apollo/rover rover subgraph publish chets-federated-gateway-prd@current --name books --schema ./books.graphql --routing-url https://book-graph.herokuapp.com/api
+```
+
+#### Production Deployment and Enabling Trace
+
+**_ Use tsc-alias to resolve the alaises in the final dist folder _**
+`"build": "tsc -p tsconfig.prod.json && tsc-alias -p tsconfig.prod.json",`
+
+- Deploy indivdual graphs to Heroku.
+- This can be easily done using Heroku cli.
+- Login to the cli using `heroku login`
+- Than navigate to the graphs folder, eg `books-service`
+- Initialize a `git` repo with `git init`.
+- Now create a new app in the Heroku Dashboard and copy the name.
+- After that add the newlly created App to the git repo created above by running
+  `heroku git:remote -a <app-name>`
+- Now add the local files by runnign `git add --all`
+- Lets commit the changes `git commit -m first commit`
+- Now push to heroku master `git push heroku master`
+- Repeat the process for each graph and gateway.
+- Don't forget to set the environment tvariables in Heroku for gateway and each graph services.
+- After this we should have our Graphs and Gateway deployed to Heroku.
+
+**_ To enable the Operation Trace make sure apollo-server is above > 2.7.0 version and you have the APOLLO_KEY set in the env for gateway. _**
+
 #### Did not work
 
 - Tried using the `dotenv -- cross-var` to mask the graph id in the package script but it did not work in the github actions. It works fine from the command line in the local development.

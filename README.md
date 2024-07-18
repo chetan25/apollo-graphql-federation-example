@@ -1,4 +1,10 @@
-## How to setup Managed Federation with Apollo Studio
+---
+Title: How to setup Managed Federation with Apollo Studio
+Excerpt: Demonstrating how to use Apollo Studio to setup Federated Graphs.
+Tech: "Apollo, Graphql, NodeJs"
+---
+
+# How to setup Managed Federation with Apollo Studio
 
 - First create an account in [Apollo Studio](https://studio.apollographql.com/).
 - Create an Organization in there to store the graphs.
